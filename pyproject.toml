@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sfile-scraper"
+version = "0.0.1"
+authors = [
+  { name="dianudi", email="dian_udi@proton.me" },
+]
+description = "Sfile web scraper"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "requests",
+  "bs4",
+  "brotli"
+]
+license = {file = "LICENSE"}
+keywords = ["sfile", "sfile-scraper", "web-scraper", "file-sharing"]
+
+[project.urls]
+Homepage = "https://github.com/dianudi/sfile-scraper"
+Issues = "https://github.com/dianudi/sfile-scraper/issues"
