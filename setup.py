@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='sfile',
     packages=find_packages(exclude=['tests', 'assets']),
-    version='0.0.1',
+    version='0.0.2',
     description='Sfile web scaper',
     author='Dianudi',
     url="https://github.com/dianudi/sfile-scraper",

@@ -1,4 +1,5 @@
 import unittest
+import datetime
 from sfile import Sfile, SfileException
 
 
@@ -38,8 +39,11 @@ class TestSfile(unittest.TestCase):
             raise Exception('No files found')
         file = sfile.get_detail(files[0].url)
         self.assertTrue(file.name)
+        self.assertTrue(file.date)
+        self.assertIs(datetime.datetime, type(file.date))
         self.assertTrue(file.size)
-        self.assertTrue(file.download_count)
+        if file.download_count >= 0:
+            self.assertIs(int, type(file.download_count))
         self.assertTrue(file.download_link)
 
         # test with invalid url

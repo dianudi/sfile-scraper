@@ -1,6 +1,7 @@
 import requests
 import bs4
 import re
+import datetime
 from .SfileException import LockedFileException, FileNotFoundException
 
 
@@ -29,9 +30,10 @@ class FileDetail():
             raise FileNotFoundException()
         soup = bs4.BeautifulSoup(res.text, 'html.parser')
         div_list = soup.findAll('div', class_='list')
-        self.name = soup.find('h1').contents[0]
-        self.date = div_list[2].contents[-1]
-        self.download_count = div_list[3].contents[-1][-1]
+        self.name = soup.find('title').contents[0]
+        self.date = (lambda date: datetime.datetime.strptime(
+            date, '%d %B %Y'))(' '.join(div_list[2].contents[-1].split(' ')[-3:]))
+        self.download_count = int(div_list[3].contents[-1].split(' ')[-1])
         # get download link
         dl = soup.find('a', id='download').get('href')
         if not dl:
@@ -42,5 +44,5 @@ class FileDetail():
         k = soup.find('a', id='download').get('onclick')
         self.download_link = f"{href}?k={re.search('[a-f0-9]{32}', k).group()}"
         self.size = re.search('(?<=Download File )\(.*?\)',
-                              soup.find('a', id='download').contents[-1]).group()
+                              soup.find('a', id='download').contents[-1]).group()[1:-1]
         return

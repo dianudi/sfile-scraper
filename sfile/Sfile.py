@@ -7,8 +7,8 @@ from .FileList import FileList
 
 class Sfile():
     def __init__(self):
-        self.base_url = 'https://sfile.mobi'
-        self.base_headers = {
+        self.__base_url = 'https://sfile.mobi'
+        self.__base_headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -23,7 +23,7 @@ class Sfile():
         }
 
     def search_files(self, query, page=1) -> list[FileList]:
-        headers = copy.deepcopy(self.base_headers)
+        headers = copy.deepcopy(self.__base_headers)
         if page <= 0:
             raise Exception('page must be greater than 0')
         if page > 1:
@@ -31,7 +31,7 @@ class Sfile():
         else:
             page = ''
         res = requests.get(
-            f'{self.base_url}/search.php?q={query}' + page, headers=headers)
+            f'{self.__base_url}/search.php?q={query}' + page, headers=headers)
         soup = bs4.BeautifulSoup(res.text, 'html.parser')
         list = soup.find_all('div', class_='list', limit=20)
         files = []
@@ -42,7 +42,7 @@ class Sfile():
         return files
 
     def latest_upload(self, page=1) -> list[FileDetail]:
-        headers = copy.deepcopy(self.base_headers)
+        headers = copy.deepcopy(self.__base_headers)
         if page <= 0:
             raise Exception('page must be greater than 0')
         if page > 1:
@@ -50,7 +50,7 @@ class Sfile():
         else:
             page = ''
         res = requests.get(
-            f'{self.base_url}/uploads.php' + page, headers=headers)
+            f'{self.__base_url}/uploads.php' + page, headers=headers)
         soup = bs4.BeautifulSoup(res.text, 'html.parser')
         list = soup.find_all('div', class_='list', limit=20)
         files = []
@@ -61,7 +61,7 @@ class Sfile():
         return files
 
     def trending_files(self, page=1) -> list[FileDetail]:
-        headers = copy.deepcopy(self.base_headers)
+        headers = copy.deepcopy(self.__base_headers)
         if page <= 0:
             raise Exception('page must be greater than 0')
         if page > 1:
@@ -69,7 +69,7 @@ class Sfile():
         else:
             page = ''
         res = requests.get(
-            f'{self.base_url}/top.php' + page, headers=headers)
+            f'{self.__base_url}/top.php' + page, headers=headers)
         soup = bs4.BeautifulSoup(res.text, 'html.parser')
         list = soup.find_all('div', class_='list', limit=20)
         files = []
