@@ -19,7 +19,8 @@ s = Sfile()
 # get latest uoload files on page 1
 files = s.latest_upload()
 for file in files:
-    print(f'Name: {file.name}\n Size: {file.size}\n Uploaded: {file.date}\n Downloaded: {file.download_count}\n Direct Download Link: ${file.download_link}')
+    file_detail = file.get_detail()
+    print(f'Name: {file_detail.name}\n Size: {file_detail.size}\n Uploaded: {file_detail.date}\n Downloaded: {file_detail.download_count}\n Direct Download Link: ${file_detail.download_link}')
 
 # get trending files on page 2
 files = s.trending_files(page=2)
@@ -29,7 +30,7 @@ files = s.search_files('python')
 
 # get detail of file by given link
 file = s.get_detail('https://sfile.mobi/xxxxxx')
-print(file)
+print(f'Name: {file.name}\n Size: {file.size}\n Uploaded: {file.date}\n Downloaded: {file.download_count}\n Direct Download Link: ${file.download_link}')
 
 ```
 
